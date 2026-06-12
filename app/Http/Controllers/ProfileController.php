@@ -20,7 +20,7 @@ class ProfileController extends Controller
 
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'string', 'max:20', Rule::unique('users')->ignore($user->id)],
+            'phone' => ['required', 'numeric', 'digits_between:9,15', 'regex:/^[0-9]+$/', Rule::unique('users')->ignore($user->id)],
             'current_password' => ['required', 'current_password'],
         ]);
 

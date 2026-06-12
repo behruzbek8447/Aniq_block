@@ -92,7 +92,7 @@
             <tr>
                 <td style="color:#9ca3af;">{{ $users->firstItem() + $i }}</td>
                 <td style="font-weight:500;">{{ $user->name }} @if($user->id === auth()->id())<span style="color:#9ca3af;font-weight:400;">(siz)</span>@endif</td>
-                <td>{{ $user->phone }}</td>
+                <td>+998{{ $user->phone }}</td>
                 <td>
                     <span class="badge {{ $user->role === 'super_admin' ? 'badge-super' : 'badge-admin' }}">
                         {{ $user->role === 'super_admin' ? 'Super admin' : 'Admin' }}

@@ -4,21 +4,22 @@ use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClassroomController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\StudentProfileController;
+use App\Http\Controllers\TeacherController;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Support\Facades\Route;
 
 // Public routes (redirect if authenticated)
 Route::middleware([RedirectIfAuthenticated::class])->group(function () {
-    Route::get('/', [RegisterController::class, 'show'])->name('register.form');
     Route::get('/register', [RegisterController::class, 'show']);
     Route::post('/register', [RegisterController::class, 'store'])->name('register.submit');
-    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login.form');
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 });
 
@@ -27,6 +28,9 @@ Route::get('/thanks', [RegisterController::class, 'thanks'])->name('register.tha
 
 // Authenticated routes
 Route::middleware('auth')->group(function () {
+    // Dashboard
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
     // Students CRUD + import/export
     Route::get('/students', [StudentController::class, 'index'])->name('students.index');
     Route::get('/students/create', [StudentController::class, 'create'])->name('students.create');
@@ -65,6 +69,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/enrollments/create', [EnrollmentController::class, 'create'])->name('enrollments.create');
     Route::post('/enrollments', [EnrollmentController::class, 'store'])->name('enrollments.store');
     Route::delete('/enrollments/{enrollment}', [EnrollmentController::class, 'destroy'])->name('enrollments.destroy');
+
+    // Teachers CRUD
+    Route::get('/teachers', [TeacherController::class, 'index'])->name('teachers.index');
+    Route::get('/teachers/create', [TeacherController::class, 'create'])->name('teachers.create');
+    Route::post('/teachers', [TeacherController::class, 'store'])->name('teachers.store');
+    Route::get('/teachers/{teacher}/edit', [TeacherController::class, 'edit'])->name('teachers.edit');
+    Route::put('/teachers/{teacher}', [TeacherController::class, 'update'])->name('teachers.update');
+    Route::delete('/teachers/{teacher}', [TeacherController::class, 'destroy'])->name('teachers.destroy');
+
+    // Teacher certificates
+    Route::post('/teachers/{teacher}/certificates', [TeacherController::class, 'storeCertificate'])->name('teachers.certificates.store');
+    Route::delete('/teachers/{teacher}/certificates/{certificate}', [TeacherController::class, 'destroyCertificate'])->name('teachers.certificates.destroy');
 
     // Attendance
     Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');

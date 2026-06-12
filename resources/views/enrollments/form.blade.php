@@ -30,7 +30,7 @@
                 <option value="">— O'quvchini tanlang —</option>
                 @foreach($students as $s)
                 <option value="{{ $s->id }}" {{ old('student_id') == $s->id ? 'selected' : '' }}>
-                    {{ $s->fio ?: trim(($s->first_name ?? '') . ' ' . ($s->last_name ?? '')) }} ({{ $s->phone }})
+                    {{ $s->fio ?: trim(($s->first_name ?? '') . ' ' . ($s->last_name ?? '')) }} (+998{{ $s->phone }})
                 </option>
                 @endforeach
             </select>

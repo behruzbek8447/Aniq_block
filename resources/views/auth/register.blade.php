@@ -125,7 +125,10 @@
             </div>
             <div class="field">
                 <label for="phone">Telefon raqam</label>
-                <input id="phone" type="tel" name="phone" value="{{ old('phone') }}" placeholder="901234567" required>
+                <div style="display:flex;border:1.5px solid #e5e7eb;border-radius:10px;overflow:hidden;">
+                    <span style="padding:10px 0 10px 14px;background:#f3f4f6;color:#6b7280;font-weight:600;font-size:0.9rem;border-right:1px solid #e5e7eb;">+998</span>
+                    <input id="phone" type="tel" name="phone" value="{{ old('phone') }}" placeholder="901234567" required autofocus style="flex:1;border:none;outline:none;padding:10px 14px;font-size:0.9rem;font-family:inherit;">
+                </div>
                 @error('phone')<div class="error">{{ $message }}</div>@enderror
             </div>
             <div class="field">

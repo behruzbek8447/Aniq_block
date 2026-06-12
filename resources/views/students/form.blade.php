@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
-@section('title', isset($student) ? "O'quvchini tahrirlash" : 'Yangi o\'quvchi')
-@section('heading', isset($student) ? "O'quvchini tahrirlash" : 'Yangi o\'quvchi')
+@section('title', $student->id ? "O'quvchini tahrirlash" : 'Yangi o\'quvchi')
+@section('heading', $student->id ? "O'quvchini tahrirlash" : 'Yangi o\'quvchi')
 
 @section('content')
 <style>
@@ -56,9 +56,9 @@
 </style>
 
 <div class="form-card">
-    <form method="POST" action="{{ isset($student) ? '/students/'.$student->id : '/students' }}">
+    <form method="POST" action="{{ $student->id ? '/students/'.$student->id : '/students' }}">
         @csrf
-        @if(isset($student)) @method('PUT') @endif
+        @if($student->id) @method('PUT') @endif
 
         <div class="row">
             <div class="field">
@@ -75,7 +75,7 @@
 
         <div class="field">
             <label for="phone">Telefon raqam</label>
-            <input id="phone" name="phone" value="{{ old('phone', $student->phone ?? '') }}" placeholder="+998901234567" required>
+            <input id="phone" name="phone" value="{{ old('phone', $student->phone ? '+998'.$student->phone : '') }}" placeholder="+998901234567" required>
             @error('phone')<div class="error">{{ $message }}</div>@enderror
         </div>
 

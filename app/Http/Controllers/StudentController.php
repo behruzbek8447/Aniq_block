@@ -33,7 +33,7 @@ class StudentController extends Controller
 
     public function create()
     {
-        return view('students.form');
+        return view('students.form', ['student' => new Student()]);
     }
 
     public function store(Request $request)
@@ -41,7 +41,7 @@ class StudentController extends Controller
         $validated = $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['nullable', 'string', 'max:255'],
-            'phone' => ['required', 'string', 'max:20', 'unique:students,phone'],
+            'phone' => ['required', 'numeric', 'digits_between:9,15', 'regex:/^[0-9]+$/', 'unique:students,phone'],
             'address' => ['nullable', 'string', 'max:500'],
         ]);
 
@@ -67,7 +67,7 @@ class StudentController extends Controller
         $validated = $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['nullable', 'string', 'max:255'],
-            'phone' => ['required', 'string', 'max:20', 'unique:students,phone,' . $student->id],
+            'phone' => ['required', 'numeric', 'digits_between:9,15', 'regex:/^[0-9]+$/', 'unique:students,phone,' . $student->id],
             'address' => ['nullable', 'string', 'max:500'],
         ]);
 

@@ -161,7 +161,7 @@
                 <td style="font-weight:500;">
                     {{ $student->first_name ? trim($student->first_name . ' ' . $student->last_name) : $student->fio }}
                 </td>
-                <td>{{ $student->phone }}</td>
+                <td>+998{{ $student->phone }}</td>
                 <td>
                     @forelse($student->enrollments as $e)
                         <span class="classroom-label">{{ $e->classroom->name }}</span>

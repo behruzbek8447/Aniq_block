@@ -16,11 +16,11 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $validated = $request->validate([
-            'phone' => 'required|numeric|digits_between:9,15',
+            'phone' => ['required', 'numeric', 'digits_between:9,15', 'regex:/^[0-9]+$/'],
             'password' => ['required', 'string'],
         ]);
 
-        $phone = $this->normalizePhone($validated['phone']);
+        $phone = $validated['phone'];
 
         if (!Auth::attempt(['phone' => $phone, 'password' => $validated['password']])) {
             return back()->withErrors(['phone' => "Telefon raqam yoki parol noto'g'ri."])->onlyInput('phone');
@@ -40,8 +40,4 @@ class AuthController extends Controller
         return redirect('/login')->with('status', 'Siz tizimdan chiqdingiz.');
     }
 
-    private function normalizePhone(string $phone): string
-    {
-        return preg_replace('/[^\d+]/', '', $phone);
-    }
 }
